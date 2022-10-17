@@ -34,7 +34,7 @@ export async function main(
 		// parameters { UserPoolId: string!, Username: string!, GroupName: string! }
 		callback(null, await cisp.adminAddUserToGroup(payload).promise());
 	} else if (operation === 'ListUsers') {
-		// parameters { UserPoolId: string!, Username: string!, AttributesToGet: [string!], Limit: int(0-60), PaginationToken: string }
+		// parameters { UserPoolId: string!, AttributesToGet: [string!], Limit: int(0-60), PaginationToken: string }
 		callback(null, await cisp.listUsers(payload).promise());
 	} else {
 		callback('invalid operation');
