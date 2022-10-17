@@ -1,0 +1,31 @@
+import { Callback, Context } from 'aws-lambda';
+import { default as AWS, CognitoIdentityServiceProvider } from 'aws-sdk';
+
+interface Event {
+	operation: 'AdminCreateUser' | 'AdminDeleteUser' | 'AdminResetUserPassword';
+	payload: any;
+}
+
+export async function main(
+	{ operation, payload }: Event,
+	context: Context,
+	callback: Callback,
+) {
+	const cisp = new CognitoIdentityServiceProvider({
+		apiVersion: 'latest',
+		region: 'us-east-2',
+	});
+
+	if (operation === 'AdminCreateUser') {
+		// parameters { UserPoolId: string!, Username: string!, DesiredDeliveryMediums: ["EMAIL"|"PHONE"], UserAttributes: [] }
+		callback(null, await cisp.adminCreateUser(payload).promise());
+	} else if (operation === 'AdminDeleteUser') {
+		// parameters { UserPoolId: string!, Username: string! }
+		callback(null, await cisp.adminDeleteUser(payload).promise());
+	} else if (operation === 'AdminResetUserPassword') {
+		// parameters { UserPoolId: string!, Username: string! }
+		callback(null, await cisp.adminResetUserPassword(payload).promise());
+	} else {
+		callback('invalid operation');
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"name": "manage-cognito-lambda",
+	"version": "0.0.1",
+	"main": "index.js",
+	"repository": "https://github.com/astrocloudllc/manage-cognito-lambda",
+	"author": "Blake Nedved <blakeanedved@gmail.com>",
+	"license": "MIT",
+	"dependencies": {
+		"aws-lambda": "^1.0.7",
+		"aws-sdk": "^2.1233.0"
+	},
+	"devDependencies": {
+		"@types/aws-lambda": "^8.10.107"
+	}
+}
