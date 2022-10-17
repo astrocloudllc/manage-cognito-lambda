@@ -2,7 +2,12 @@ import { Callback, Context } from 'aws-lambda';
 import { default as AWS, CognitoIdentityServiceProvider } from 'aws-sdk';
 
 interface Event {
-	operation: 'AdminCreateUser' | 'AdminDeleteUser' | 'AdminResetUserPassword';
+	operation:
+		| 'AdminCreateUser'
+		| 'AdminDeleteUser'
+		| 'AdminResetUserPassword'
+		| 'AdminAddUserToGroup'
+		| 'ListUsers';
 	payload: any;
 }
 
@@ -25,6 +30,12 @@ export async function main(
 	} else if (operation === 'AdminResetUserPassword') {
 		// parameters { UserPoolId: string!, Username: string! }
 		callback(null, await cisp.adminResetUserPassword(payload).promise());
+	} else if (operation === 'AdminAddUserToGroup') {
+		// parameters { UserPoolId: string!, Username: string!, GroupName: string! }
+		callback(null, await cisp.adminAddUserToGroup(payload).promise());
+	} else if (operation === 'ListUsers') {
+		// parameters { UserPoolId: string!, Username: string!, AttributesToGet: [string!], Limit: int(0-60), PaginationToken: string }
+		callback(null, await cisp.listUsers(payload).promise());
 	} else {
 		callback('invalid operation');
 	}
